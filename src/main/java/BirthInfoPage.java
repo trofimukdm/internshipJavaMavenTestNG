@@ -1,5 +1,3 @@
-package Patterns;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -19,7 +17,7 @@ public class BirthInfoPage {
     By grandfather = By.cssSelector("input[id=\"TextInputField-18\"]");
     By completeButton = By.xpath("//button[contains(text(), \"Завершить\")]");
 
-    void fillBirthInfo() {
+    public void fillBirthInfo() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(placeOfBirth)).sendKeys("Минск");
         wait.until(ExpectedConditions.visibilityOfElementLocated(mother)).sendKeys("Анна");
         wait.until(ExpectedConditions.visibilityOfElementLocated(father)).sendKeys("Иван");
@@ -29,7 +27,7 @@ public class BirthInfoPage {
     }
 
     public BirthInfoPage() {
-        this.driver = DriverManager.getDriver();
+        this.driver = MyDriverManager.getDriver();
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 }

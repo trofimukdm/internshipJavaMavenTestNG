@@ -1,5 +1,3 @@
-package Patterns;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -21,7 +19,7 @@ public class UserRegistrationPage {
     By applicantNextButton = By.xpath("//button[contains(text(), \"Далее\")]");
 
 
-    void fillUserData() {
+    public void fillUserData() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(applicantLastName)).sendKeys("Иванов");
         wait.until(ExpectedConditions.visibilityOfElementLocated(applicantFirstName)).sendKeys("Иван");
         wait.until(ExpectedConditions.visibilityOfElementLocated(applicantMiddleName)).sendKeys("Иванович");
@@ -32,7 +30,7 @@ public class UserRegistrationPage {
     }
 
     public UserRegistrationPage() {
-        this.driver = DriverManager.getDriver();
+        this.driver = MyDriverManager.getDriver();
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 }

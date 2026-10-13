@@ -1,5 +1,3 @@
-package Patterns;
-
 public class ApplicationData {
 
     private final String lastName;

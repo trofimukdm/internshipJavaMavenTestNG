@@ -1,5 +1,3 @@
-package Patterns;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -19,7 +17,7 @@ public class ApplicationFormPage {
     private final WebDriverWait wait;
 
     public ApplicationFormPage() {
-        this.driver = DriverManager.getDriver();
+        this.driver = MyDriverManager.getDriver();
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 

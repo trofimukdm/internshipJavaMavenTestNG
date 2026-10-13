@@ -1,5 +1,3 @@
-package Patterns;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -8,7 +6,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 
-public class PageTest {
+public class PagesTests {
 
     @BeforeMethod
     void setUp() {
@@ -16,7 +14,7 @@ public class PageTest {
         String password = "senlatest";
         String host = "regoffice.senla.eu";
         String authUrl = "https://" + username + ":" + password + "@" + host;
-        DriverManager.getDriver().get(authUrl);
+        MyDriverManager.getDriver().get(authUrl);
 
     }
 
@@ -32,7 +30,7 @@ public class PageTest {
         selectServicePage.clickMarriageSelect();
         citizenDataPage.fillCitizenData();
         marriageInfoPage.fillMarriageInfo();
-        WebElement result = DriverManager.getDriver().findElement(By.xpath("//span[contains(text(), 'Спасибо за обращение!')]"));
+        WebElement result = MyDriverManager.getDriver().findElement(By.xpath("//span[contains(text(), 'Спасибо за обращение!')]"));
         Assert.assertEquals(result.getText(), "Спасибо за обращение!");
     }
 
@@ -48,7 +46,7 @@ public class PageTest {
         selectServicePage.clickBirthSelect();
         citizenDataPage.fillCitizenData();
         birthInfoPage.fillBirthInfo();
-        WebElement result = DriverManager.getDriver().findElement(By.xpath("//span[contains(text(), 'Спасибо за обращение!')]"));
+        WebElement result = MyDriverManager.getDriver().findElement(By.xpath("//span[contains(text(), 'Спасибо за обращение!')]"));
         Assert.assertEquals(result.getText(), "Спасибо за обращение!");
     }
 
@@ -64,7 +62,7 @@ public class PageTest {
         selectServicePage.clickDeathSelect();
         citizenDataPage.fillCitizenData();
         deathInfoPage.fillDeathInfo();
-        WebElement result = DriverManager.getDriver().findElement(By.xpath("//span[contains(text(), 'Спасибо за обращение!')]"));
+        WebElement result = MyDriverManager.getDriver().findElement(By.xpath("//span[contains(text(), 'Спасибо за обращение!')]"));
         Assert.assertEquals(result.getText(), "Спасибо за обращение!");
     }
 
@@ -116,6 +114,6 @@ public class PageTest {
 
     @AfterMethod
     void tearDown() {
-        DriverManager.quitDriver();
+        MyDriverManager.quitDriver();
     }
 }

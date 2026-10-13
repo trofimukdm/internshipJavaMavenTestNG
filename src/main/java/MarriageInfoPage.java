@@ -1,5 +1,3 @@
-package Patterns;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -22,7 +20,7 @@ public class MarriageInfoPage {
     By completeButton = By.xpath("//button[contains(text(), \"Завершить\")]");
 
 
-    void fillMarriageInfo() {
+    public void fillMarriageInfo() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(registrationDate)).sendKeys("08.08.2008");
         wait.until(ExpectedConditions.visibilityOfElementLocated(newLastName)).sendKeys("Иванова");
         wait.until(ExpectedConditions.visibilityOfElementLocated(spouseLastName)).sendKeys("Сидорова");
@@ -34,7 +32,7 @@ public class MarriageInfoPage {
     }
 
     public MarriageInfoPage() {
-        this.driver = DriverManager.getDriver();
+        this.driver = MyDriverManager.getDriver();
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 }

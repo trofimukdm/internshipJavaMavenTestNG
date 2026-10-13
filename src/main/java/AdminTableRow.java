@@ -1,11 +1,9 @@
-package Patterns;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 public class AdminTableRow {
 
-    private WebElement row;
+    private final WebElement row;
 
     public AdminTableRow(WebElement row) {
         this.row = row;

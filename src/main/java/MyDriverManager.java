@@ -1,13 +1,11 @@
-package Patterns;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-public class DriverManager {
+public class MyDriverManager {
 
     private static WebDriver driver;
 
-    private DriverManager() {
+    private MyDriverManager() {
     }
 
     public static WebDriver getDriver() {

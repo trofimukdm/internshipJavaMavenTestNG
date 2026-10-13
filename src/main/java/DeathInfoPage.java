@@ -1,5 +1,3 @@
-package Patterns;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -16,14 +14,14 @@ public class DeathInfoPage {
     By deathPlace = By.cssSelector("input[id=\"TextInputField-15\"]");
     By completeButton = By.xpath("//button[contains(text(), \"Завершить\")]");
 
-    void fillDeathInfo() {
+    public void fillDeathInfo() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(deathDate)).sendKeys("03.03.2003");
         wait.until(ExpectedConditions.visibilityOfElementLocated(deathPlace)).sendKeys("Минск");
         wait.until(ExpectedConditions.visibilityOfElementLocated(completeButton)).click();
     }
 
     public DeathInfoPage() {
-        this.driver = DriverManager.getDriver();
+        this.driver = MyDriverManager.getDriver();
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 }

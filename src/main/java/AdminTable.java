@@ -1,5 +1,3 @@
-package Patterns;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,13 +8,13 @@ import java.time.Duration;
 import java.util.List;
 
 public class AdminTable {
-    private WebDriver driver;
+    private final WebDriver driver;
     private final WebDriverWait wait;
 
-    private By rows = By.cssSelector("table.MuiTable-root");
+    private final By rows = By.cssSelector("table.MuiTable-root");
 
     public AdminTable() {
-        this.driver = DriverManager.getDriver();
+        this.driver = MyDriverManager.getDriver();
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
