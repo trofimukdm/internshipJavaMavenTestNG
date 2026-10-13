@@ -1,3 +1,5 @@
+package internship;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -15,6 +17,7 @@ public class MarriageTest {
         String host = "regoffice.senla.eu";
         String authUrl = "https://" + username + ":" + password + "@" + host;
 
+        driver.manage().window().maximize();
         driver.get(authUrl);
 
         WebElement userSelect = driver.findElement(By.xpath("//*[contains(text(), \"Войти как пользователь\")]"));
