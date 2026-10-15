@@ -1,0 +1,31 @@
+package pages;
+
+import data.MarriageInfoData;
+import org.openqa.selenium.By;
+
+public class MarriageInfoPage extends BasePage {
+
+    public MarriageInfoPage() {
+        super();
+    }
+
+    private final By registrationDate = By.xpath("//input[@id = //label[contains(., 'Дата регистрации')]/@for]");
+    private final By newLastName = By.xpath("//input[@id = //label[contains(., 'Новая фамилия')]/@for]");
+    private final By spouseLastName = By.xpath("//input[@id = //label[contains(., 'Фамилия супруга/и')]/@for]");
+    private final By spouseFirstName = By.xpath("//input[@id = //label[contains(., 'Имя супруга/и')]/@for]");
+    private final By spouseMiddleName = By.xpath("//input[@id = //label[contains(., 'Отчество супруга/и')]/@for]");
+    private final By spouseBirthDate = By.xpath("//input[@id = //label[contains(., 'Дата рождения супруга/и')]/@for]");
+    private final By spousePassport = By.xpath("//input[@id = //label[contains(., 'Номер паспорта супруга/и')]/@for]");
+    private final By completeButton = By.xpath("//button[contains(text(), 'Завершить')]");
+
+    public void fillMarriageInfo(MarriageInfoData data) {
+        type(registrationDate, data.getRegistrationDate());
+        type(newLastName, data.getNewLastName());
+        type(spouseLastName, data.getSpouseLastName());
+        type(spouseFirstName, data.getSpouseFirstName());
+        type(spouseMiddleName, data.getSpouseMiddleName());
+        type(spouseBirthDate, data.getSpouseBirthDate());
+        type(spousePassport, data.getSpousePassport());
+        click(completeButton);
+    }
+}
