@@ -1,13 +1,13 @@
-package Patterns;
+package data;
 
-public class ApplicationData {
+public class ApplicationFormData {
 
     private final String lastName;
     private final String firstName;
     private final String email;
     private final String requestNumber;
 
-    public ApplicationData(String lastName, String firstName, String email, String requestNumber) {
+    public ApplicationFormData(String lastName, String firstName, String email, String requestNumber) {
         this.lastName = lastName;
         this.firstName = firstName;
         this.email = email;
