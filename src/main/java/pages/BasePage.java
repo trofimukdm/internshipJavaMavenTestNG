@@ -9,6 +9,7 @@ import utils.MyDriverManager;
 import java.time.Duration;
 
 public class BasePage {
+
     protected final WebDriver driver;
     protected final WebDriverWait wait;
 
@@ -22,6 +23,6 @@ public class BasePage {
     }
 
     public void click(By locator) {
-        driver.findElement(locator).click();
+        wait.until(ExpectedConditions.elementToBeClickable(locator)).click();
     }
 }

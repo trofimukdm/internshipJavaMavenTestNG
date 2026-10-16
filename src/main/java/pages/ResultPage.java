@@ -9,7 +9,7 @@ public class ResultPage extends BasePage {
         super();
     }
 
-    private final By successMessageLocator = By.xpath("//span[contains(normalize-space(.), 'Ваша заявка')]");
+    private final By successMessageLocator = By.xpath("//span[starts-with(normalize-space(.), 'Ваша заявка №')" + " and contains(normalize-space(.), 'отправлена на рассмотрение')]");
     private final By finishButton = By.xpath("//button[contains(text(), 'Закрыть')]");
 
     public String getOrderNumber() {

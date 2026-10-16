@@ -10,7 +10,6 @@ import pages.*;
 import utils.MyDriverManager;
 import utils.TestConfig;
 
-
 public class PagesTests extends BaseTest {
 
     public PagesTests() {
