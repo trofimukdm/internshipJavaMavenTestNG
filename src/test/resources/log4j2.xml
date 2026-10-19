@@ -14,12 +14,12 @@
 
         <!-- Вывод в файл (все логи) -->
         <File name="File" fileName="target/logs/test-log.log" append="false">
-            <PatternLayout pattern="${log-pattern}"/>
+            <PatternLayout charset="UTF-8" pattern="${log-pattern}"/>
         </File>
 
         <!-- Вывод в файл (только ошибки) -->
         <File name="ErrorFile" fileName="target/logs/error-log.log" append="false">
-            <PatternLayout pattern="${log-pattern}"/>
+            <PatternLayout charset="UTF-8" pattern="${log-pattern}"/>
             <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
         </File>
     </Appenders>
@@ -33,7 +33,7 @@
         </Root>
 
         <!-- Отдельный логгер для тестов (более подробный) -->
-        <Logger name="framework.tests" level="debug" additivity="false">
+        <Logger name="tests" level="debug" additivity="false">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="File"/>
         </Logger>

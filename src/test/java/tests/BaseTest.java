@@ -40,8 +40,8 @@ public class BaseTest {
         driver.get(TestConfig.getBaseUrl());
         logger.info("Страница успешно открыта");
     }
-
     @AfterMethod(alwaysRun = true)
+
     public void tearDown(ITestResult result) {
         Allure.getLifecycle().updateFixture(fixture -> fixture.setName("Закрываем браузер"));
         if (result.getStatus() == ITestResult.FAILURE) {

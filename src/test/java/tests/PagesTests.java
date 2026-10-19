@@ -1,9 +1,7 @@
 package tests;
 
 import data.*;
-import io.qameta.allure.Allure;
-import io.qameta.allure.Description;
-import io.qameta.allure.Step;
+import io.qameta.allure.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.*;
@@ -11,6 +9,11 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.*;
 
+import static io.qameta.allure.SeverityLevel.CRITICAL;
+
+@Epic("Регистрация заявок на портале")
+@Feature("Проверки регистрации всех видов заявок")
+@Owner("Дмитрий")
 public class PagesTests extends BaseTest {
     private static final Logger logger = LogManager.getLogger(PagesTests.class);
 
@@ -18,7 +21,9 @@ public class PagesTests extends BaseTest {
         super();
     }
 
-    @Test
+    @Test(description = "Регистрация заявки и проверка статуса и типа -> Регистрация брака")
+    @Severity(CRITICAL)
+    @Story("Автотест для сценария регистрации свадьбы")
     @Description("Регистрации заявки о браке. Проверка статуса и типа заявки в режиме Администратора")
     public void checkMarriageRegistration() {
         UserRegistrationData userRegistrationData = new UserRegistrationData("Иванов", "Иван", "Иванович", "1234567", "123123", "Минск");
@@ -38,7 +43,9 @@ public class PagesTests extends BaseTest {
         });
     }
 
-    @Test
+    @Test(description = "Регистрация заявки и проверка статуса и типа -> Регистрация рождения")
+    @Severity(CRITICAL)
+    @Story("Автотест для сценария регистрации рождения")
     @Description("Регистрации заявки о рождении. Проверка статуса и типа заявки в режиме Администратора")
     public void checkBirthRegistration() {
         UserRegistrationData userRegistrationData = new UserRegistrationData("Иванов", "Иван", "Иванович", "1234567", "123123", "Минск");
@@ -57,8 +64,10 @@ public class PagesTests extends BaseTest {
         });
     }
 
-    @Test
+    @Test(description = "Регистрация заявки и проверка статуса и типа -> Регистрация смерти")
     @Description("Регистрации заявки о смерти. Проверка статуса и типа заявки в режиме Администратора")
+    @Severity(CRITICAL)
+    @Story("Автотест для сценария регистрации смерти")
     public void checkDeathRegistration() {
         UserRegistrationData userRegistrationData = new UserRegistrationData("Иванов", "Иван", "Иванович", "1234567", "123123", "Минск");
         CitizenData citizenData = new CitizenData("Иванов", "Иван", "Иванович", "01.02.2001", "123123", "Муж", "Минск");
@@ -76,7 +85,7 @@ public class PagesTests extends BaseTest {
         });
     }
 
-    @Test
+    @Test(description = "Проверка недоступности кнопки 'Отправить' при формировании документа")
     @Description("Проверка, что если поля заявки на формирование документа не заполнены, кнопка 'Отправить' будет недоступной")
     @Step("Проверка недоступности кнопки Отправить")
     public void submitButtonIsDisabledForEmptyForm() {
@@ -92,7 +101,7 @@ public class PagesTests extends BaseTest {
         });
     }
 
-    @Test
+    @Test(description = "Проверка доступности кнопки 'Отправить' при формировании документа")
     @Description("Проверка, что если поля заявки на формирование документа заполнены, кнопка 'Отправить' будет доступной")
     @Step("Проверка доступности кнопки Отправить")
     public void submitButtonIsEnabledForValidData() {
