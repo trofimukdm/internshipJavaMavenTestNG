@@ -9,12 +9,9 @@ public class MainPage extends BasePage {
         super();
     }
 
-    private final By loginAsUserButton =
-            By.xpath("//button[contains(text(), 'Войти как пользователь')]");
-    private final By loginAsAdminButton =
-            By.xpath("//button[contains(text(), 'Войти как администратор')]");
-    private final By orderCertificateButton =
-            By.xpath("//button[contains(text(), 'Заказать справку')]");
+    private final By loginAsUserButton = By.xpath("//button[normalize-space(text()) = 'Войти как пользователь']");
+    private final By loginAsAdminButton = By.xpath("//button[normalize-space(text()) = 'Войти как администратор']");
+    private final By orderCertificateButton = By.xpath("//button[normalize-space(text()) = 'Заказать справку']");
 
     public void clickLoginAsUser() {
         wait.until(ExpectedConditions.elementToBeClickable(loginAsUserButton)).click();

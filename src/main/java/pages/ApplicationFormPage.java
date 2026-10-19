@@ -5,11 +5,11 @@ import org.openqa.selenium.By;
 
 public class ApplicationFormPage extends BasePage {
 
-    private final By lastNameInput = By.xpath("//input[@id = //label[contains(., 'Фамилия')]/@for]");
-    private final By firstNameInput = By.xpath("//input[@id = //label[contains(., 'Имя')]/@for]");
-    private final By emailInput = By.xpath("//input[@id = //label[contains(., 'Электронная почта')]/@for]");
-    private final By requestNumberInput = By.xpath("//input[@id = //label[contains(., 'Номер заявки')]/@for]");
-    private final By submitButton = By.xpath("//button[contains(text(), 'Отправить')]");
+    private final By lastNameInput = By.xpath("//input[@id = //label[normalize-space(text()) = 'Фамилия']/@for]");
+    private final By firstNameInput = By.xpath("//input[@id = //label[normalize-space(text()) = 'Имя']/@for]");
+    private final By emailInput = By.xpath("//input[@id = //label[normalize-space(text()) = 'Электронная почта']/@for]");
+    private final By requestNumberInput = By.xpath("//input[@id = //label[normalize-space(text()) = 'Номер заявки']/@for]");
+    private final By submitButton = By.xpath("//button[normalize-space(text()) = 'Отправить']");
 
     public ApplicationFormPage() {
         super();

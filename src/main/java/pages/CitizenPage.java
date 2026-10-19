@@ -9,14 +9,14 @@ public class CitizenPage extends BasePage {
         super();
     }
 
-    private final By citizenLastName = By.xpath("//input[@id = //label[contains(., 'Фамилия')]/@for]");
-    private final By citizenFirstName = By.xpath("//input[@id = //label[contains(., 'Имя')]/@for]");
-    private final By citizenMiddleName = By.xpath("//input[@id = //label[contains(., 'Отчество')]/@for]");
-    private final By citizenBirthDate = By.xpath("//input[@id = //label[contains(., 'Дата рождения')]/@for]");
-    private final By citizenPassport = By.xpath("//input[@id = //label[contains(., 'Номер паспорта')]/@for]");
-    private final By citizenGender = By.xpath("//input[@id = //label[contains(., 'Пол')]/@for]");
-    private final By citizenAddress = By.xpath("//input[@id = //label[contains(., 'Адрес прописки')]/@for]");
-    private final By citizenNextButton = By.xpath("//button[contains(text(), 'Далее')]");
+    private final By citizenLastName = By.xpath("//input[@id = //label[normalize-space(text()) = 'Фамилия']/@for]");
+    private final By citizenFirstName = By.xpath("//input[@id = //label[normalize-space(text()) = 'Имя']/@for]");
+    private final By citizenMiddleName = By.xpath("//input[@id = //label[normalize-space(text()) = 'Отчество']/@for]");
+    private final By citizenBirthDate = By.xpath("//input[@id = //label[normalize-space(text()) = 'Дата рождения']/@for]");
+    private final By citizenPassport = By.xpath("//input[@id = //label[normalize-space(text()) = 'Номер паспорта']/@for]");
+    private final By citizenGender = By.xpath("//input[@id = //label[normalize-space(text()) = 'Пол']/@for]");
+    private final By citizenAddress = By.xpath("//input[@id = //label[normalize-space(text()) = 'Адрес прописки']/@for]");
+    private final By citizenNextButton = By.xpath("//button[normalize-space(text()) = 'Далее']");
 
 
     public void fillCitizenData(CitizenData data) {
@@ -27,6 +27,8 @@ public class CitizenPage extends BasePage {
         type(citizenPassport, data.getCitizenPassport());
         type(citizenGender, data.getCitizenGender());
         type(citizenAddress, data.getCitizenAddress());
+    }
+    public void clickCitizenNextButton(){
         click(citizenNextButton);
     }
 }

@@ -10,13 +10,13 @@ public class SelectServicePage extends BasePage {
     }
 
     private final By marriageSelect =
-            By.xpath("//button[contains(text(), 'Регистрация брака')]");
+            By.xpath("//button[normalize-space(text()) = 'Регистрация брака']");
 
     private final By birthSelect =
-            By.xpath("//button[contains(text(), 'Регистрация рождения')]");
+            By.xpath("//button[normalize-space(text()) = 'Регистрация рождения']");
 
     private final By deathSelect =
-            By.xpath("//button[contains(text(), 'Регистрация смерти')]");
+            By.xpath("//button[normalize-space(text()) = 'Регистрация смерти']");
 
     public void clickMarriageSelect() {
         wait.until(ExpectedConditions.elementToBeClickable(marriageSelect)).click();

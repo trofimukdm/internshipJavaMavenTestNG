@@ -9,13 +9,15 @@ public class DeathInfoPage extends BasePage {
         super();
     }
 
-    private final By deathDate = By.xpath("//input[@id = //label[contains(., 'Дата смерти')]/@for]");
-    private final By deathPlace = By.xpath("//input[@id = //label[contains(., 'Место смерти')]/@for]");
-    private final By completeButton = By.xpath("//button[contains(text(), 'Завершить')]");
+    private final By deathDate = By.xpath("//input[@id = //label[normalize-space(text()) = 'Дата смерти']/@for]");
+    private final By deathPlace = By.xpath("//input[@id = //label[normalize-space(text()) = 'Место смерти']/@for]");
+    private final By completeButton = By.xpath("//button[normalize-space(text()) = 'Завершить']");
 
     public void fillDeathInfo(DeathInfoData data) {
         type(deathDate, data.getDeathDate());
         type(deathPlace, data.getDeathPlace());
+    }
+    public void clickCompleteButton(){
         click(completeButton);
     }
 }
