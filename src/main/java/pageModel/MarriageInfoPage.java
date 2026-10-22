@@ -1,6 +1,6 @@
-package pages;
+package pageModel;
 
-import data.MarriageInfoData;
+import dataModel.MarriageInfoData;
 import org.openqa.selenium.By;
 
 public class MarriageInfoPage extends BasePage {

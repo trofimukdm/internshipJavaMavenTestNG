@@ -1,6 +1,6 @@
-package pages;
+package pageModel;
 
-import data.ApplicationFormData;
+import dataModel.ApplicationFormData;
 import org.openqa.selenium.By;
 
 public class ApplicationFormPage extends BasePage {

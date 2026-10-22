@@ -26,6 +26,10 @@ public class MyDriverManager {
         return driver.get();
     }
 
+    public static WebDriver getDriverIfExists() {
+        return driver.get();
+    }
+
     public static void quitDriver() {
         if (driver.get() != null) {
             logger.info("Закрываем ChromeDriver");

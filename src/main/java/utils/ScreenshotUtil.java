@@ -12,11 +12,12 @@ public class ScreenshotUtil {
 
     @Attachment(value = "Screenshot on failure", type = "image/png")
     public static byte[] takeScreenshot() {
-        WebDriver driver = MyDriverManager.getDriver();
+        WebDriver driver = MyDriverManager.getDriverIfExists();
         if (driver != null){
-            logger.error("Сделан скриншот падения теста");
-            return ((TakesScreenshot) MyDriverManager.getDriver()).getScreenshotAs(OutputType.BYTES);
+            logger.info("Делаем скриншот упавшего теста");
+            return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
         }
+        logger.warn("Невозможно сделать скриншот: драйвер уже закрыт или не был создан");
         return new byte[0];
     }
 }

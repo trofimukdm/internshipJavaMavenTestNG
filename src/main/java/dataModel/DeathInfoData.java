@@ -1,4 +1,4 @@
-package data;
+package dataModel;
 
 public class DeathInfoData {
     private final String deathDate;

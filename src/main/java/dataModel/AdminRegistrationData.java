@@ -1,4 +1,4 @@
-package data;
+package dataModel;
 
 public class AdminRegistrationData {
     private final String adminLastName;

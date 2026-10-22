@@ -1,4 +1,4 @@
-package data;
+package dataModel;
 
 public class MarriageInfoData {
     private final String registrationDate;

@@ -1,6 +1,6 @@
-package pages;
+package pageModel;
 
-import data.CitizenData;
+import dataModel.CitizenData;
 import org.openqa.selenium.By;
 
 public class CitizenPage extends BasePage {
