@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+
+    <!-- Паттерн форматирования логов -->
+    <Properties>
+        <Property name="log-pattern">%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n</Property>
+    </Properties>
+
+    <Appenders>
+        <!-- Вывод в консоль -->
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout charset="UTF-8" pattern="${log-pattern}"/>
+        </Console>
+
+        <!-- Вывод в файл (все логи) -->
+        <File name="File" fileName="target/logs/test-log.log" append="false">
+            <PatternLayout charset="UTF-8" pattern="${log-pattern}"/>
+        </File>
+
+        <!-- Вывод в файл (только ошибки) -->
+        <File name="ErrorFile" fileName="target/logs/error-log.log" append="false">
+            <PatternLayout charset="UTF-8" pattern="${log-pattern}"/>
+            <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
+        </File>
+    </Appenders>
+
+    <Loggers>
+        <!-- Корневой логгер (для всего проекта) -->
+        <Root level="info">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="File"/>
+            <AppenderRef ref="ErrorFile"/>
+        </Root>
+
+        <!-- Отдельный логгер для тестов (более подробный) -->
+        <Logger name="tests" level="debug" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="File"/>
+        </Logger>
+    </Loggers>
+
+</Configuration>
