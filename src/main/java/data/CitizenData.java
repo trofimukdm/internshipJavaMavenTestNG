@@ -1,4 +1,4 @@
-package dataModel;
+package data;
 
 public class CitizenData {
     private final String citizenLastName;

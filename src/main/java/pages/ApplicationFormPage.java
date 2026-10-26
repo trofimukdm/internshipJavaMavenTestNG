@@ -1,7 +1,8 @@
-package pageModel;
+package pages;
 
-import dataModel.ApplicationFormData;
+import data.ApplicationFormData;
 import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class ApplicationFormPage extends BasePage {
 
@@ -23,6 +24,7 @@ public class ApplicationFormPage extends BasePage {
     }
 
     public boolean isSubmitEnabled() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(submitButton));
         return driver.findElement(submitButton).isEnabled();
     }
 }

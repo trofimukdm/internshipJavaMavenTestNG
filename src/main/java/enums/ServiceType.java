@@ -5,7 +5,7 @@ public enum ServiceType {
     BIRTH("Регистрация рождения"),
     DEATH("Регистрация смерти");
 
-    public final String description;
+    private final String description;
 
     ServiceType(String description) {
         this.description = description;

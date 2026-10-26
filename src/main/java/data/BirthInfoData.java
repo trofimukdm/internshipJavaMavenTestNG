@@ -1,7 +1,9 @@
-package dataModel;
+package data;
 
 
-public class BirthInfoData {
+import enums.ServiceType;
+
+public final class BirthInfoData implements ServiceInfoData{
     private final String placeOfBirth;
     private final String mother;
     private final String father;
@@ -15,6 +17,11 @@ public class BirthInfoData {
         this.father = father;
         this.grandmother = grandmother;
         this.grandfather = grandfather;
+    }
+
+    @Override
+    public ServiceType getServiceType() {
+        return ServiceType.BIRTH;
     }
 
     public String getPlaceOfBirth() {

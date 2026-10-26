@@ -1,6 +1,6 @@
 package utils;
 
-import dataModel.*;
+import data.*;
 
 public class TestDataFactory {
 

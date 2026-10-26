@@ -1,6 +1,6 @@
-package pageModel;
+package pages;
 
-import dataModel.DeathInfoData;
+import data.DeathInfoData;
 import org.openqa.selenium.By;
 
 public class DeathInfoPage extends BasePage {

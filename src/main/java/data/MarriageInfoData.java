@@ -1,6 +1,8 @@
-package dataModel;
+package data;
 
-public class MarriageInfoData {
+import enums.ServiceType;
+
+public final class MarriageInfoData implements ServiceInfoData{
     private final String registrationDate;
     private final String newLastName;
     private final String spouseLastName;
@@ -17,6 +19,11 @@ public class MarriageInfoData {
         this.spouseMiddleName = spouseMiddleName;
         this.spouseBirthDate = spouseBirthDate;
         this.spousePassport = spousePassport;
+    }
+
+    @Override
+    public ServiceType getServiceType() {
+        return ServiceType.MARRIAGE;
     }
 
     public String getRegistrationDate() {

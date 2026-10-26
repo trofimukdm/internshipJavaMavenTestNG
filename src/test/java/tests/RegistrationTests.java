@@ -1,17 +1,14 @@
 package tests;
 
-import dataModel.*;
+import data.*;
 import io.qameta.allure.*;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import pageModel.*;
+import pages.*;
 import steps.AdminSteps;
 import steps.RegistrationSteps;
 import enums.ApplicationStatus;
 import enums.ApplicationType;
-import enums.ServiceType;
 import utils.TestDataFactory;
 
 @Epic("Регистрация заявок на портале")
@@ -23,19 +20,18 @@ public class RegistrationTests extends BaseTest {
         super();
     }
 
-    private static final Logger logger = LogManager.getLogger(RegistrationTests.class);
     private final RegistrationSteps registrationSteps = new RegistrationSteps();
     private final AdminSteps adminSteps = new AdminSteps();
 
     @Test(dataProvider = "registrationCaseData", dataProviderClass = MyDataProvider.class, description = "Проверка регистрации услуги")
     @Severity(SeverityLevel.CRITICAL)
     @Story("Автотест для сценариев регистрации заявок")
-    public void checkRegistrationFlow(ServiceType serviceType, Object serviceInfoData, ApplicationType applicationType) {
+    public void checkRegistrationFlow(ServiceInfoData serviceInfoData, ApplicationType applicationType) {
         UserRegistrationData userData = TestDataFactory.getDefaultUser();
         CitizenData citizenData = TestDataFactory.getDefaultCitizen();
         AdminRegistrationData adminData = TestDataFactory.getDefaultAdmin();
 
-        String orderNumber = registrationSteps.submitApplication(userData, citizenData, serviceInfoData, serviceType);
+        String orderNumber = registrationSteps.submitApplication(userData, citizenData, serviceInfoData);
 
         adminSteps.loginAsAdmin(adminData);
 

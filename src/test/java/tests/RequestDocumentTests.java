@@ -1,13 +1,11 @@
 package tests;
 
-import dataModel.ApplicationFormData;
+import data.ApplicationFormData;
 import io.qameta.allure.*;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import pageModel.ApplicationFormPage;
-import pageModel.MainPage;
+import pages.ApplicationFormPage;
+import pages.MainPage;
 
 @Epic("Регистрация заявок на формирование документов")
 @Feature("Проверки запросов на формирование справок")
@@ -16,7 +14,6 @@ public class RequestDocumentTests extends BaseTest {
     public RequestDocumentTests() {
         super();
     }
-    private static final Logger logger = LogManager.getLogger(RequestDocumentTests.class);
 
     @Test(description = "Проверка недоступности кнопки -> 'Отправить' при формировании документа")
     @Severity(SeverityLevel.NORMAL)

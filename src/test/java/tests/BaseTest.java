@@ -15,8 +15,8 @@ import utils.TestConfig;
 import java.net.URI;
 import java.util.function.Predicate;
 
-public class BaseTest {
-    protected final Logger logger = LogManager.getLogger(BaseTest.class);
+public abstract class BaseTest {
+    protected final Logger logger = LogManager.getLogger(getClass());
 
     @BeforeMethod(description = "Открываем браузер, вводим логин/пароль и заходим в приложение")
     public void setUp() {

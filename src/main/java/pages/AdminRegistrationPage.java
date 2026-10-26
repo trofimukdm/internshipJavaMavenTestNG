@@ -1,6 +1,6 @@
-package pageModel;
+package pages;
 
-import dataModel.AdminRegistrationData;
+import data.AdminRegistrationData;
 import org.openqa.selenium.By;
 
 public class AdminRegistrationPage extends BasePage {
