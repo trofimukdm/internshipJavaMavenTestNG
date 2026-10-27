@@ -1,4 +1,4 @@
-package tests;
+package tests.ui.tests;
 
 import data.ApplicationFormData;
 import io.qameta.allure.*;

@@ -1,4 +1,6 @@
-package api;
+package tests.api.factory;
+
+import tests.api.data.ApiData;
 
 public class ApiTestDataFactory {
 

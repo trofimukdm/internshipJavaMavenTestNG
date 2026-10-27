@@ -1,4 +1,4 @@
-package tests.api;
+package tests.api.tests;
 
 import api.*;
 import io.qameta.allure.*;
@@ -8,6 +8,8 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import tests.api.data.ApiData;
+import tests.api.factory.ApiTestDataFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -46,11 +48,11 @@ public class MarriageApplicationFullCaseApiTest {
         int applicationId = given()
                 .spec(ApiSpecs.requestWithAuth())
                 .body(data)
-                .log().all()
+                .log().ifValidationFails()
                 .when()
                 .post("/sendUserRequest")
                 .then()
-                .log().all()
+                .log().ifValidationFails()
                 .spec(ApiSpecs.successResponse())
                 .extract()
                 .path("data.applicationid");
@@ -68,12 +70,12 @@ public class MarriageApplicationFullCaseApiTest {
 
         given()
                 .spec(ApiSpecs.requestWithAuth())
-                .log().all()
+                .log().ifValidationFails()
                 .when()
                 .pathParam("id", applicationId)
                 .get("/getApplStatus/{id}")
                 .then()
-                .log().all()
+                .log().ifValidationFails()
                 .spec(ApiSpecs.successResponse())
                 .body("data.kindofapplication", equalTo("Получение свидетельства о браке"))
                 .body("data.statusofapplication", equalTo("under consideration"));
@@ -89,11 +91,11 @@ public class MarriageApplicationFullCaseApiTest {
         int staffId = given()
                 .spec(ApiSpecs.requestWithAuth())
                 .body(data)
-                .log().all()
+                .log().ifValidationFails()
                 .when()
                 .post("/sendAdminRequest")
                 .then()
-                .log().all()
+                .log().ifValidationFails()
                 .spec(ApiSpecs.successResponse())
                 .extract()
                 .path("data.staffid");
@@ -117,11 +119,11 @@ public class MarriageApplicationFullCaseApiTest {
         given()
                 .spec(ApiSpecs.requestWithAuth())
                 .body(adminBody)
-                .log().all()
+                .log().ifValidationFails()
                 .when()
                 .post("/requestProcess")
                 .then()
-                .log().all()
+                .log().ifValidationFails()
                 .spec(ApiSpecs.successResponse())
                 .body("data.statusofapplication", equalTo("approved"))
                 .body("data.kindofapplication", equalTo("Получение свидетельства о браке"));

@@ -1,7 +1,7 @@
-package api;
+package tests.api.data;
 
-import io.qameta.allure.internal.shadowed.jackson.annotation.JsonInclude;
-import io.qameta.allure.internal.shadowed.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ApiData {

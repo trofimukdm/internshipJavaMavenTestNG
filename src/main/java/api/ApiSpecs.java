@@ -3,6 +3,8 @@ package api;
 import io.qameta.allure.Step;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
+import io.restassured.config.LogConfig;
+import io.restassured.config.RestAssuredConfig;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
@@ -14,6 +16,7 @@ public class ApiSpecs {
         return new RequestSpecBuilder()
                 .setContentType(ContentType.JSON)
                 .addHeader("Authorization", "Basic " + getBase64Auth())
+                .setConfig(RestAssuredConfig.config().logConfig(LogConfig.logConfig().blacklistHeader("Authorization")))
                 .build();
     }
 

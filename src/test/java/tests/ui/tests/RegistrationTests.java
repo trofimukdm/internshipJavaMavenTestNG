@@ -1,4 +1,4 @@
-package tests;
+package tests.ui.tests;
 
 import data.*;
 import io.qameta.allure.*;
@@ -9,6 +9,7 @@ import steps.AdminSteps;
 import steps.RegistrationSteps;
 import enums.ApplicationStatus;
 import enums.ApplicationType;
+import tests.ui.dataprovider.MyDataProvider;
 import utils.TestDataFactory;
 
 @Epic("Регистрация заявок на портале")

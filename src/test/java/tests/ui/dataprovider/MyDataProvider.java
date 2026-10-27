@@ -1,4 +1,4 @@
-package tests;
+package tests.ui.dataprovider;
 
 import org.testng.annotations.DataProvider;
 import enums.ApplicationType;
