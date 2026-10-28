@@ -1,10 +1,10 @@
 package steps;
 
-import dataModel.*;
+import data.*;
 import io.qameta.allure.Step;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import pageModel.*;
+import pages.*;
 import enums.ServiceType;
 
 public class RegistrationSteps {
@@ -27,25 +27,7 @@ public class RegistrationSteps {
         logger.info("Услуга выбрана -> {}", serviceType.getDescription());
     }
 
-    @Step("Подача заявки пользователем и получение её номера")
-    public String submitApplication(UserRegistrationData userData, CitizenData citizenData, Object serviceInfoData, ServiceType serviceType) {
-
-        MainPage mainPage = new MainPage();
-        mainPage.clickLoginAsUser();
-        logger.info("Вошли как Пользователь");
-
-        UserRegistrationPage userRegistrationPage = new UserRegistrationPage();
-        userRegistrationPage.fillUserRegistrationData(userData);
-        userRegistrationPage.clickApplicantNextButton();
-        logger.info("Заполнили данные для регистрации Заявителя");
-
-        selectService(serviceType);
-
-        CitizenPage citizenPage = new CitizenPage();
-        citizenPage.fillCitizenData(citizenData);
-        citizenPage.clickCitizenNextButton();
-        logger.info("Заполнили данные гражданина");
-
+    private void fillServiceData(ServiceInfoData serviceInfoData){
         switch (serviceInfoData) {
             case MarriageInfoData data:
                 MarriageInfoPage marriageInfoPage = new MarriageInfoPage();
@@ -67,9 +49,30 @@ public class RegistrationSteps {
                 deathInfoPage.clickCompleteButton();
                 logger.info("Заполнили данные для услуги - Регистрация смерти");
                 break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + serviceInfoData);
         }
+    }
+
+    @Step("Подача заявки пользователем и получение её номера")
+    public String submitApplication(UserRegistrationData userData, CitizenData citizenData, ServiceInfoData serviceInfoData) {
+
+        MainPage mainPage = new MainPage();
+        mainPage.clickLoginAsUser();
+        logger.info("Вошли как Пользователь");
+
+        UserRegistrationPage userRegistrationPage = new UserRegistrationPage();
+        userRegistrationPage.fillUserRegistrationData(userData);
+        userRegistrationPage.clickApplicantNextButton();
+        logger.info("Заполнили данные для регистрации Заявителя");
+
+        selectService(serviceInfoData.getServiceType());
+
+        CitizenPage citizenPage = new CitizenPage();
+        citizenPage.fillCitizenData(citizenData);
+        citizenPage.clickCitizenNextButton();
+        logger.info("Заполнили данные гражданина");
+
+        fillServiceData(serviceInfoData);
+
         ResultPage resultPage = new ResultPage();
         String orderNumber = resultPage.getOrderNumber();
         resultPage.clickFinishButton();
