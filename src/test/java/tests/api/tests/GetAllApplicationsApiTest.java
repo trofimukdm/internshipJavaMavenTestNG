@@ -6,9 +6,9 @@ import io.qameta.allure.*;
 import io.restassured.response.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import static io.restassured.RestAssured.given;
 
@@ -45,15 +45,12 @@ public class GetAllApplicationsApiTest {
                 .response();
         int expectedTotal = Integer.parseInt(response.path("total").toString());
         int actualDataSize = response.path("data.size()");
-        Assert.assertTrue(expectedTotal >=0, "Общее количество заявок (total) не может быть отрицательным");
-        Assert.assertTrue(actualDataSize >= 0, "Массив данных заявок пуст!");
-        Assert.assertTrue(actualDataSize <= expectedTotal,
-                String.format("Ошибка логики API: на странице %d элементов, но всего в базе их заявлено %d",
-                        actualDataSize, expectedTotal));
-        Assert.assertTrue(actualDataSize <= limit,
-                String.format("Превышен лимит выдачи: на странице %d элементов, а лимит %d", actualDataSize, limit));
 
-        logger.info("Список заявок успешно получен. Проверено: total={}, data.size()={}, limit={}",
-                expectedTotal, actualDataSize, limit);
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertTrue(expectedTotal >= 0, "Общее количество заявок (total) не может быть отрицательным");
+        softAssert.assertTrue(actualDataSize <= expectedTotal, String.format("Ошибка логики API: на странице %d элементов, но всего в базе их заявлено %d", actualDataSize, expectedTotal));
+        softAssert.assertTrue(actualDataSize <= limit, String.format("Превышен лимит выдачи: на странице %d элементов, а лимит %d", actualDataSize, limit));
+        softAssert.assertAll();
+        logger.info("Список заявок успешно получен. Проверено: total={}, data.size()={}, limit={}", expectedTotal, actualDataSize, limit);
     }
 }

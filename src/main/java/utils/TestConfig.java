@@ -40,4 +40,16 @@ public class TestConfig {
         logger.debug("Запрашиваем password из конфигурации");
         return properties.getProperty("app.password");
     }
+
+    public static String getDbUrl() {
+        return properties.getProperty("db.url");
+    }
+
+    public static String getDbUsername() {
+        return properties.getProperty("db.username");
+    }
+
+    public static String getDbPassword() {
+        return properties.getProperty("db.password");
+    }
 }

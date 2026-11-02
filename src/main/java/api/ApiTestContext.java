@@ -5,11 +5,11 @@ public class ApiTestContext {
     private static final ThreadLocal<Integer> createdApplicationId = new ThreadLocal<>();
     private static final ThreadLocal<Integer> createdStaffId = new ThreadLocal<>();
 
-    public static void setStaffId(int id) {
+    public static void setStaffId(Integer id) {
         createdStaffId.set(id);
     }
 
-    public static int getStaffId() {
+    public static Integer getStaffId() {
         return createdStaffId.get();
     }
 

@@ -1,6 +1,7 @@
 package api;
 
 import io.qameta.allure.Step;
+import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.config.LogConfig;
@@ -11,16 +12,17 @@ import io.restassured.specification.ResponseSpecification;
 import utils.TestConfig;
 
 public class ApiSpecs {
-    @Step("Формируем и отправляем запрос")
+    @Step("Формируем и отправляем API запрос")
     public static RequestSpecification requestWithAuth() {
         return new RequestSpecBuilder()
                 .setContentType(ContentType.JSON)
                 .addHeader("Authorization", "Basic " + getBase64Auth())
                 .setConfig(RestAssuredConfig.config().logConfig(LogConfig.logConfig().blacklistHeader("Authorization")))
+                .addFilter(new AllureRestAssured())
                 .build();
     }
 
-    @Step("Проверяем ответ запроса")
+    @Step("Проверяем ответ API запроса")
     public static ResponseSpecification successResponse() {
         return new ResponseSpecBuilder()
                 .expectStatusCode(200)
