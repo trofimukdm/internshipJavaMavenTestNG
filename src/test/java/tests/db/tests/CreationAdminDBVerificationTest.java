@@ -2,12 +2,12 @@ package tests.db.tests;
 
 import api.ApiConfig;
 import api.ApiSpecs;
-import api.ApiTestContext;
 import db.DBActions;
 import db.DBManager;
 import io.qameta.allure.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -19,12 +19,14 @@ import java.util.List;
 import java.util.Map;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.notNullValue;
 
 @Feature("Проверки создания пользователя через API и добавление данных в БД ")
 @Owner("Дмитрий")
 public class CreationAdminDBVerificationTest {
 
     private static final Logger logger = LogManager.getLogger(CreationAdminDBVerificationTest.class);
+    private Integer staffId;
 
     @BeforeClass(description = "Инициализируем конфигурацию API")
     public void setUp() {
@@ -34,15 +36,12 @@ public class CreationAdminDBVerificationTest {
 
     @AfterClass(alwaysRun = true, description = "Очистка тестовых данных из БД")
     public void tearDown() {
-        Integer staffId = ApiTestContext.getStaffId();
-
-        if (staffId != null) {
-            DBActions.executeDelete("DELETE FROM reg_office.staff WHERE staffid = ?;", staffId);
+        if (this.staffId != null) {
+            DBActions.executeUpdate("DELETE FROM reg_office.staff WHERE staffid = ?;", staffId);
         } else {
             logger.warn("ID для Администратора не был сохранен в контексте. Очистка БД не требуется");
         }
         DBManager.closeConnection();
-        ApiTestContext.clearStaffId();
         logger.info("Очистили данные контекста и закрыли соединение с БД");
     }
 
@@ -52,7 +51,7 @@ public class CreationAdminDBVerificationTest {
     public void testCreateAdminAndVerifyInDatabase() {
         ApiData data = ApiTestDataFactory.createAdminUserData();
 
-        Integer staffId = given()
+        this.staffId = given()
                 .spec(ApiSpecs.requestWithAuth())
                 .body(data)
                 .log().ifValidationFails()
@@ -61,11 +60,11 @@ public class CreationAdminDBVerificationTest {
                 .then()
                 .log().ifValidationFails()
                 .spec(ApiSpecs.successResponse())
+                .body("data.staffid", notNullValue())
                 .extract()
                 .path("data.staffid");
 
-        ApiTestContext.setStaffId(staffId);
-        logger.info("Регистрируем пользователя Админ через API. ID {} сохранен в ApiTestContext.", staffId);
+        logger.info("Регистрируем пользователя Админ через API. Получен ID: {}", staffId);
 
         verifyAdminInDatabase(staffId, data);
         logger.info("Все данные Админа в БД проверены и совпадают с отправленными!");
@@ -73,8 +72,10 @@ public class CreationAdminDBVerificationTest {
 
     @Step("Проверяем данные Админа в базе данных")
     public void verifyAdminInDatabase(Integer staffId, ApiData data){
-        List<Map<String, Object>> dbResult = DBActions.executeSELECT("SELECT * FROM reg_office.staff s WHERE s.staffid = ?;", staffId);
+        List<Map<String, Object>> dbResult = DBActions.executeQuery("SELECT * FROM reg_office.staff s WHERE s.staffid = ?;", staffId);
         DBActions.attachQueryResult(dbResult);
+        Assert.assertEquals(dbResult.size(), 1, "Админ с staffid=" + staffId + " не найден в БД");
+
         Map<String, Object> adminRecord = dbResult.getFirst();
 
         SoftAssert softAssert = new SoftAssert();

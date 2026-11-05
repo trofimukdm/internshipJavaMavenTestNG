@@ -12,7 +12,7 @@ public class DBManager {
     private static final Logger logger = LogManager.getLogger(DBManager.class);
     private static final ThreadLocal<Connection> connection = new ThreadLocal<>();
 
-    public DBManager() {
+    private DBManager() {
     }
 
     public static Connection getConnection() {
@@ -36,11 +36,12 @@ public class DBManager {
         if (connection.get() != null) {
             try {
                 connection.get().close();
-                connection.remove();
                 logger.info("Соединение с базой данных закрыто");
             } catch (SQLException e) {
                 logger.error("Ошибка при закрытии соединения: {}", e.getMessage());
                 throw new RuntimeException("Connection closing error", e);
+            } finally {
+                connection.remove();
             }
         } else {
             logger.warn("Попытка закрыть несуществующее соединение с базой данных");

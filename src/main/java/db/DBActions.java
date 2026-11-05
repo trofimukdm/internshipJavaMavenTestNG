@@ -14,7 +14,7 @@ import java.util.Map;
 public class DBActions {
     private static final Logger logger = LogManager.getLogger(DBActions.class);
     @Step("Формируем и отправляем SELECT запрос в БД")
-    public static List<Map<String, Object>> executeSELECT(String sql, Object... params) {
+    public static List<Map<String, Object>> executeQuery(String sql, Object... params) {
 
         List<Map<String, Object>> results = new ArrayList<>();
         Connection connection = DBManager.getConnection();
@@ -44,16 +44,17 @@ public class DBActions {
         return results;
     }
     @Step("Формируем и отправляем DELETE запрос в БД")
-    public static void executeDelete(String sql, Object... params) {
+    public static int executeUpdate(String sql, Object... params) {
 
         Connection connection = DBManager.getConnection();
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             setParameters(statement, params);
-            statement.executeUpdate();
-            logger.info("Выполняем DELETE запрос в БД");
+            int affectedRows = statement.executeUpdate();
+            logger.info("Запрос выполнен успешно. Затронуто строк: {}", affectedRows);
+            return affectedRows;
         } catch (SQLException e) {
-            logger.error("Ошибка выполнения DELETE запроса: {}", e.getMessage());
+            logger.error("Ошибка выполнения запроса: {}", e.getMessage());
             throw new RuntimeException("DELETE query execution failed", e);
         }
     }
