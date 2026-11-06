@@ -9,3 +9,12 @@ app.username=
 
 # Пароль для авторизации
 app.password=
+
+# Базовый URL БД
+db.url=
+
+# User
+db.username=
+
+#Password
+db.password=

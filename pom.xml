@@ -13,7 +13,7 @@
         <maven.compiler.target>25</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <selenium.version>4.50.0</selenium.version>
+        <selenium.version>4.52.0</selenium.version>
         <testng.version>7.12.0</testng.version>
         <allure.version>3.0.0</allure.version>
         <log4j.version>2.26.1</log4j.version>
@@ -24,6 +24,7 @@
         <jackson-databind.version>2.22.4</jackson-databind.version>
         <log4j-slf4j2-impl.version>2.26.1</log4j-slf4j2-impl.version>
         <allure-rest-assured.version>3.0.0</allure-rest-assured.version>
+        <postgresql.version>42.7.14</postgresql.version>
     </properties>
 
     <build>
@@ -122,6 +123,13 @@
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-slf4j2-impl</artifactId>
             <version>${log4j-slf4j2-impl.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${postgresql.version}</version>
             <scope>test</scope>
         </dependency>
 

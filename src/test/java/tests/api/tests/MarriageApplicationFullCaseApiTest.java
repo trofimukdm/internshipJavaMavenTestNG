@@ -1,6 +1,8 @@
 package tests.api.tests;
 
 import api.*;
+import db.DBActions;
+import db.DBManager;
 import io.qameta.allure.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,6 +18,7 @@ import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.notNullValue;
 
 @Epic("API тесты")
 @Feature("Работа с заявками через API")
@@ -25,6 +28,9 @@ public class MarriageApplicationFullCaseApiTest {
 
     private static final Logger logger = LogManager.getLogger(MarriageApplicationFullCaseApiTest.class);
 
+    private Integer staffId;
+    private Integer applicationId;
+
     @BeforeClass(description = "Инициализируем конфигурацию API")
     public void setUp() {
         ApiConfig.configure();
@@ -33,19 +39,35 @@ public class MarriageApplicationFullCaseApiTest {
 
     @AfterClass(description = "Очистка контекста тестов")
     public void tearDown() {
-        ApiTestContext.clearApplicationId();
-        ApiTestContext.clearStaffId();
-        logger.info("Контекст тестов очищен");
-    }
+        if (this.applicationId != null) {
+            logger.info("Очищаем тестовые данные: удаляем заявку с ID {}", this.applicationId);
+            int deletedApps = DBActions.executeUpdate("DELETE FROM reg_office.applications WHERE applicationid = ?;", this.applicationId);
 
+            Assert.assertEquals(deletedApps, 1,
+                    String.format("Не удалось удалить заявку с ID %d. Затронуто строк: %d", this.applicationId, deletedApps));
+        }
+
+        if (this.staffId != null) {
+            logger.info("Очищаем тестовые данные: удаляем админа с ID {}", this.staffId);
+            int deletedStaff = DBActions.executeUpdate("DELETE FROM reg_office.staff WHERE staffid = ?;", this.staffId);
+
+            Assert.assertEquals(deletedStaff, 1,
+                    String.format("Не удалось удалить админа с ID %d. Затронуто строк: %d", this.staffId, deletedStaff));
+        }
+
+        if (this.applicationId == null && this.staffId == null) {
+            logger.warn("Тестовые данные не были созданы. Очистка БД не требуется");
+        }
+        DBManager.closeConnection();
+        logger.info("Соединение с БД закрыто, тестовые данные очищены");
+    }
 
     @Test(description = "Создание заявки 'Регистрация брака' через API и сохранение её ID")
     public void createMarriageApplicationTest() {
-
         ApiData data = ApiTestDataFactory.createMarriageData();
         logger.info("Создаем заявку на регистрацию брака");
 
-        int applicationId = given()
+        this.applicationId = given()
                 .spec(ApiSpecs.requestWithAuth())
                 .body(data)
                 .log().ifValidationFails()
@@ -54,18 +76,15 @@ public class MarriageApplicationFullCaseApiTest {
                 .then()
                 .log().ifValidationFails()
                 .spec(ApiSpecs.successResponse())
+                .body("data.applicationid", notNullValue())
                 .extract()
                 .path("data.applicationid");
-
-        Assert.assertNotNull(applicationId, "Сервер не вернул ID созданной заявки!");
-        ApiTestContext.setApplicationId(applicationId);
 
         logger.info("Заявка успешно создана. Сохранен ID для следующих тестов: {}", applicationId);
     }
 
     @Test(description = "Получение заявки по ID через API", dependsOnMethods = "createMarriageApplicationTest")
     public void getApplicationByIdTest() {
-        int applicationId = ApiTestContext.getApplicationId();
         logger.info("Запрашиваем данные для заявки с ID: {}", applicationId);
 
         given()
@@ -88,7 +107,7 @@ public class MarriageApplicationFullCaseApiTest {
         ApiData data = ApiTestDataFactory.createAdminUserData();
         logger.info("Регистрируем пользователя Администратор");
 
-        int staffId = given()
+        this.staffId = given()
                 .spec(ApiSpecs.requestWithAuth())
                 .body(data)
                 .log().ifValidationFails()
@@ -97,11 +116,9 @@ public class MarriageApplicationFullCaseApiTest {
                 .then()
                 .log().ifValidationFails()
                 .spec(ApiSpecs.successResponse())
+                .body("data.staffid", notNullValue())
                 .extract()
                 .path("data.staffid");
-
-        Assert.assertNotNull(staffId, "Сервер не вернул ID созданного пользователя Админ!");
-        ApiTestContext.setStaffId(staffId);
 
         logger.info("Пользователь Админ создан. Сохранен его ID для следующих тестов: {}", staffId);
     }
@@ -110,11 +127,10 @@ public class MarriageApplicationFullCaseApiTest {
     public void approveApplicationByIdTest() {
 
         Map<String, Object> adminBody = new HashMap<>();
-        adminBody.put("applId", ApiTestContext.getApplicationId());
-        adminBody.put("staffid", ApiTestContext.getStaffId());
+        adminBody.put("applId", this.applicationId);
+        adminBody.put("staffid", this.staffId);
         adminBody.put("action", ApiAction.APPROVED.getValue());
-
-        logger.info("Формируем данные заявки: {} Админом: {}", ApiTestContext.getApplicationId(), ApiTestContext.getStaffId());
+        logger.info("Формируем данные заявки: {} Админом: {}", this.applicationId, this.staffId);
 
         given()
                 .spec(ApiSpecs.requestWithAuth())
@@ -128,6 +144,6 @@ public class MarriageApplicationFullCaseApiTest {
                 .body("data.statusofapplication", equalTo("approved"))
                 .body("data.kindofapplication", equalTo("Получение свидетельства о браке"));
 
-        logger.info("Заявка с ID: {} успешно одобрена", ApiTestContext.getApplicationId());
+        logger.info("Заявка с ID: {} успешно одобрена", this.applicationId);
     }
 }
